@@ -1,25 +1,22 @@
-%define name	ices
-%define version	2.0.1
-%define release	%mkrel 5
-
-Name:		%{name}
-Version:	%{version}
-Release:	%{release}
-Summary:	Source streaming for Icecast
-Group:		System/Servers
-License:	GPL
-URL:		http://www.icecast.org
-Source0:	%{name}-%{version}.tar.bz2
-Source1:	%{name}.init.bz2
-Source2:	%{name}.logrotate.bz2
-BuildRequires:	libxml2-devel
-BuildRequires:	libshout-devel >= 2.0-2mdk
-BuildRequires:	pkgconfig
-BuildRoot:	%{_tmppath}/%{name}-buildroot
-Requires(pre):		rpm-helper
-Requires(preun):		rpm-helper
-Requires(post):		rpm-helper
-Requires(postun):		rpm-helper
+Name:           ices
+Version:        2.0.1
+Release:        %mkrel 6
+Summary:        Source streaming for Icecast
+Group:          System/Servers
+License:        GPL
+URL:            http://www.icecast.org/
+Source0:        http://downloads.us.xiph.org/releases/ices/ices-2.0.1.tar.bz2
+Source1:        %{name}.init
+Source2:        %{name}.logrotate
+BuildRequires:  alsa-lib-devel
+BuildRequires:  libshout-devel
+BuildRequires:  libxml2-devel
+BuildRequires:  pkgconfig
+Requires(pre):  rpm-helper
+Requires(preun): rpm-helper
+Requires(post): rpm-helper
+Requires(postun): rpm-helper
+BuildRoot:      %{_tmppath}/%{name}-%{version}-%{release}-root
 
 %description
 IceS is a source client for a streaming server. The purpose of this client is
@@ -32,33 +29,31 @@ could be used if certain conditions are met.
 
 %prep
 %setup -q
-bzcat %{SOURCE1} > %{name}.init
-bzcat %{SOURCE2} > %{name}.logrotate
-perl -pi -e 's|<background>0</background>|<background>1</background>|' conf/*.xml
+%{__perl} -pi -e 's|<background>0</background>|<background>1</background>|' conf/*.xml
 
 %build
-%configure
-%make
+%{configure2_5x}
+%{make}
 
 %install
-rm -rf $RPM_BUILD_ROOT
+%{__rm} -rf %{buildroot}
 
-install -d -m 755 $RPM_BUILD_ROOT%{_bindir}
-install -m 755 src/%{name} $RPM_BUILD_ROOT%{_bindir}
+%{__mkdir_p} %{buildroot}%{_bindir}
+%{__cp} -a src/%{name} $RPM_BUILD_ROOT%{_bindir}
 
-install -d -m 755 $RPM_BUILD_ROOT%{_sysconfdir}
-install -m 644 conf/ices-playlist.xml $RPM_BUILD_ROOT%{_sysconfdir}/%{name}.conf
+%{__mkdir_p} %{buildroot}%{_sysconfdir}
+%{__cp} -a conf/ices-playlist.xml $RPM_BUILD_ROOT%{_sysconfdir}/%{name}.conf
 
-install -d -m 755 $RPM_BUILD_ROOT%{_initrddir}
-install -m 755 %{name}.init $RPM_BUILD_ROOT%{_initrddir}/%{name}
+%{__mkdir_p} %{buildroot}%{_initrddir}
+%{__cp} -a %{SOURCE1} $RPM_BUILD_ROOT%{_initrddir}/%{name}
 
-install -d -m 755 $RPM_BUILD_ROOT%{_sysconfdir}/logrotate.d
-install -m 644 %{name}.logrotate $RPM_BUILD_ROOT%{_sysconfdir}/logrotate.d/%{name}
+%{__mkdir_p} %{buildroot}%{_sysconfdir}/logrotate.d
+%{__cp} -a %{SOURCE2} $RPM_BUILD_ROOT%{_sysconfdir}/logrotate.d/%{name}
 
-install -d -m 755 $RPM_BUILD_ROOT%{_var}/log/%{name}
+%{__mkdir_p} %{buildroot}%{_var}/log/%{name}
 
 %clean 
-rm -rf $RPM_BUILD_ROOT
+%{__rm} -rf %{buildroot}
 
 %pre
 %_pre_useradd %{name} %{_var}/log/%{name} /bin/false
@@ -73,12 +68,10 @@ rm -rf $RPM_BUILD_ROOT
 %_postun_userdel %{name}
 
 %files
-%defattr(-,root,root)
+%defattr(0644,root,root,0755)
 %doc AUTHORS COPYING README TODO doc/*.html doc/*.css conf/*.xml
-%{_bindir}/%{name}
-%config(noreplace) %{_sysconfdir}/%{name}.conf
+%attr(0755,root,root) %{_bindir}/%{name}
+%config(noreplace) %attr(0660,ices,ices) %{_sysconfdir}/%{name}.conf
 %config(noreplace) %{_sysconfdir}/logrotate.d/%{name}
-%config(noreplace) %{_initrddir}/%{name}
-%attr(-,ices,ices) %{_var}/log/%{name}
-
-
+%attr(0755,root,root) %config(noreplace) %{_initrddir}/%{name}
+%attr(0770,ices,ices) %{_logdir}/%{name}
