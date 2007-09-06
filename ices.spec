@@ -51,6 +51,7 @@ could be used if certain conditions are met.
 %{__cp} -a %{SOURCE2} $RPM_BUILD_ROOT%{_sysconfdir}/logrotate.d/%{name}
 
 %{__mkdir_p} %{buildroot}%{_var}/log/%{name}
+/bin/touch %{buildroot}%{_var}/log/%{name}/ices.log
 
 %clean 
 %{__rm} -rf %{buildroot}
@@ -71,7 +72,8 @@ could be used if certain conditions are met.
 %defattr(0644,root,root,0755)
 %doc AUTHORS COPYING README TODO doc/*.html doc/*.css conf/*.xml
 %attr(0755,root,root) %{_bindir}/%{name}
-%config(noreplace) %attr(0660,ices,ices) %{_sysconfdir}/%{name}.conf
+%config(noreplace) %attr(0640,root,ices) %{_sysconfdir}/%{name}.conf
 %config(noreplace) %{_sysconfdir}/logrotate.d/%{name}
 %attr(0755,root,root) %config(noreplace) %{_initrddir}/%{name}
-%attr(0770,ices,ices) %{_logdir}/%{name}
+%dir %{_logdir}/%{name}
+%attr(0644,ices,ices) %{_logdir}/%{name}/ices.log
