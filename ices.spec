@@ -16,6 +16,7 @@ Requires(pre):  rpm-helper
 Requires(preun): rpm-helper
 Requires(post): rpm-helper
 Requires(postun): rpm-helper
+BuildRoot:      %{_tmppath}/%{name}-%{version}-%{release}-root
 
 %description
 IceS is a source client for a streaming server. The purpose of this client is
