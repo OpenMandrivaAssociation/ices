@@ -1,6 +1,6 @@
 Name:           ices
 Version:        2.0.1
-Release:        %mkrel 8
+Release:        %mkrel 9
 Summary:        Source streaming for Icecast
 Group:          System/Servers
 License:        GPL
