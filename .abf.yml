@@ -1,0 +1,4 @@
+sources:
+  "ices-2.0.1.tar.bz2:"	045e8419c494d77162668e8362b3c9ddc4b4974c
+  "ices.init:"	b6d174866f224a833c4eaa3c7475819bc60000fb
+  "ices.logrotate:"	c5c1ef384ba2f448bb1b7d6289178fb063d79b76
