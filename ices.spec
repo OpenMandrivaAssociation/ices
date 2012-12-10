@@ -1,6 +1,6 @@
 Name:           ices
 Version:        2.0.1
-Release:        %mkrel 10
+Release:        10
 Summary:        Source streaming for Icecast
 Group:          System/Servers
 License:        GPL
@@ -8,15 +8,14 @@ URL:            http://www.icecast.org/
 Source0:        http://downloads.us.xiph.org/releases/ices/ices-2.0.1.tar.bz2
 Source1:        %{name}.init
 Source2:        %{name}.logrotate
-BuildRequires:  alsa-lib-devel
-BuildRequires:  libshout-devel
-BuildRequires:  libxml2-devel
+BuildRequires:  pkgconfig(alsa)
+BuildRequires:  pkgconfig(shout)
+BuildRequires:  pkgconfig(libxml-2.0)
 BuildRequires:  pkgconfig
 Requires(pre):  rpm-helper
 Requires(preun): rpm-helper
 Requires(post): rpm-helper
 Requires(postun): rpm-helper
-BuildRoot:      %{_tmppath}/%{name}-%{version}-%{release}-root
 
 %description
 IceS is a source client for a streaming server. The purpose of this client is
@@ -36,7 +35,6 @@ could be used if certain conditions are met.
 %{make}
 
 %install
-%{__rm} -rf %{buildroot}
 
 %{__mkdir_p} %{buildroot}%{_bindir}
 %{__cp} -a src/%{name} $RPM_BUILD_ROOT%{_bindir}
@@ -52,9 +50,6 @@ could be used if certain conditions are met.
 
 %{__mkdir_p} %{buildroot}%{_var}/log/%{name}
 /bin/touch %{buildroot}%{_var}/log/%{name}/ices.log
-
-%clean 
-%{__rm} -rf %{buildroot}
 
 %pre
 %_pre_useradd %{name} %{_var}/log/%{name} /bin/false
@@ -77,3 +72,63 @@ could be used if certain conditions are met.
 %attr(0755,root,root) %config(noreplace) %{_initrddir}/%{name}
 %dir %{_logdir}/%{name}
 %attr(0644,ices,ices) %{_logdir}/%{name}/ices.log
+
+
+%changelog
+* Fri Dec 10 2010 Oden Eriksson <oeriksson@mandriva.com> 2.0.1-10mdv2011.0
++ Revision: 619596
+- the mass rebuild of 2010.0 packages
+
+* Fri Sep 04 2009 Thierry Vignaud <tv@mandriva.org> 2.0.1-9mdv2010.0
++ Revision: 429491
+- rebuild
+
+* Tue Jul 22 2008 Thierry Vignaud <tv@mandriva.org> 2.0.1-8mdv2009.0
++ Revision: 240834
+- rebuild
+- kill re-definition of %%buildroot on Pixel's request
+
+  + Olivier Blin <oblin@mandriva.com>
+    - restore BuildRoot
+
+* Thu Sep 06 2007 David Walluck <walluck@mandriva.org> 2.0.1-6mdv2008.0
++ Revision: 80581
+- update logrotate file
+- add logfile to package
+- spec cleanup
+- bunzip2 sources
+- build with alsa
+- set file ownerships
+
+
+* Fri Jan 26 2007 Olivier Thauvin <nanardon@mandriva.org> 2.0.1-5mdv2007.0
++ Revision: 113600
+- rebuild
+
+* Thu Aug 10 2006 Olivier Thauvin <nanardon@mandriva.org> 2.0.1-4mdv2007.0
++ Revision: 54950
+- rebuild
+- Import ices
+
+* Mon May 01 2006 Olivier Thauvin <nanardon@mandriva.org> 2.0.1-3mdk
+- fix PreReq
+
+* Mon May 01 2006 Olivier Thauvin <nanardon@mandriva.org> 2.0.2-2mdk
+- rebuild && %%mkrel
+
+* Wed Feb 16 2005 Olivier Thauvin <thauvin@aerov.jussieu.fr> 2.0.1-1mdk
+- 2.0.1
+
+* Fri Apr 23 2004 Guillaume Rousse <guillomovitch@mandrake.org> 2.0.0-4mdk
+- fix reload in initscript, HUP doesn't reload configuration
+
+* Sun Apr 11 2004 Guillaume Rousse <guillomovitch@mandrake.org> 2.0.0-3mdk
+- fix init script
+
+* Sat Apr 10 2004 Guillaume Rousse <guillomovitch@mandrake.org> 2.0.0-2mdk
+- buildrequires
+
+* Sat Apr 10 2004 Guillaume Rousse <guillomovitch@mandrake.org> 2.0.0-1mdk
+- new release
+- logrotate
+

@@ -1,0 +1,9 @@
+/var/log/ices.log {
+    create 644 ices ices
+    monthly
+    compress
+    missingok
+    postrotate
+        service ices reload > /dev/null || true
+    endscript
+}
