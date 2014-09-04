@@ -1,6 +1,6 @@
 Name:           ices
 Version:        2.0.1
-Release:        11
+Release:        13
 Summary:        Source streaming for Icecast
 Group:          System/Servers
 License:        GPL
@@ -54,13 +54,14 @@ cp -a %{SOURCE2} %{buildroot}%{_sysconfdir}/logrotate.d/%{name}
 %_pre_useradd %{name} %{_var}/log/%{name} /bin/false
 
 %post
-%_post_service %{name}
+%systemd_post %{name}.service
 
 %preun
-%_preun_service %{name}
+%systemd_preun %{name}.service
 
 %postun
 %_postun_userdel %{name}
+%systemd_postun_with_restart %{name}.service
 
 %files
 %defattr(0644,root,root,0755)
