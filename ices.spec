@@ -4,7 +4,7 @@ Release:        15
 Summary:        Source streaming for Icecast
 Group:          System/Servers
 License:        GPL
-URL:            http://www.icecast.org/
+URL:            https://www.icecast.org/
 Source0:        http://downloads.us.xiph.org/releases/ices/ices-2.0.1.tar.bz2
 Source1:        %{name}.service
 Source2:        %{name}.logrotate
