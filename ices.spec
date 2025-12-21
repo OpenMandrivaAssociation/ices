@@ -8,6 +8,11 @@ URL:            https://www.icecast.org/
 Source0:        http://downloads.us.xiph.org/releases/ices/ices-2.0.1.tar.bz2
 Source1:        %{name}.service
 Source2:        %{name}.logrotate
+BuildRequires:	autoconf
+BuildRequires:	automake
+BuildRequires:	libtool-base
+BuildRequires:	slibtool
+BuildRequires:	make
 BuildRequires:  pkgconfig(alsa)
 BuildRequires:  pkgconfig(shout)
 BuildRequires:  pkgconfig(libxml-2.0)
