@@ -1,6 +1,6 @@
 Name:           ices
 Version:        2.0.1
-Release:        15
+Release:        16
 Summary:        Source streaming for Icecast
 Group:          System/Servers
 License:        GPL
