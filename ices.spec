@@ -1,11 +1,11 @@
 Name:           ices
-Version:        2.0.1
-Release:        16
+Version:        2.0.3
+Release:        1
 Summary:        Source streaming for Icecast
 Group:          System/Servers
 License:        GPL
 URL:            https://www.icecast.org/
-Source0:        http://downloads.us.xiph.org/releases/ices/ices-2.0.1.tar.bz2
+Source0:        http://downloads.us.xiph.org/releases/ices/ices-2.0.3.tar.bz2
 Source1:        %{name}.service
 Source2:        %{name}.logrotate
 BuildRequires:	autoconf
