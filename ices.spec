@@ -8,6 +8,7 @@ URL:            https://www.icecast.org/
 Source0:        http://downloads.us.xiph.org/releases/ices/ices-2.0.3.tar.bz2
 Source1:        %{name}.service
 Source2:        %{name}.logrotate
+Source3:        %{name}.sysusers
 BuildRequires:	autoconf
 BuildRequires:	automake
 BuildRequires:	libtool-base
@@ -19,8 +20,6 @@ BuildRequires:  pkgconfig(libxml-2.0)
 BuildRequires:  pkgconfig(ogg)
 BuildRequires:  pkgconfig
 BuildRequires:	perl
-Requires(pre):  rpm-helper
-Requires(postun): rpm-helper
 
 %description
 IceS is a source client for a streaming server. The purpose of this client is
@@ -57,12 +56,7 @@ cp -a %{SOURCE2} %{buildroot}%{_sysconfdir}/logrotate.d/%{name}
 
 %{__mkdir_p} %{buildroot}%{_var}/log/%{name}
 /bin/touch %{buildroot}%{_var}/log/%{name}/ices.log
-
-%pre
-%_pre_useradd %{name} %{_var}/log/%{name} /bin/false
-
-%postun
-%_postun_userdel %{name}
+install -D -m 0644 %{SOURCE3} %{buildroot}%{_sysusersdir}/%{name}.conf
 
 %files
 %defattr(0644,root,root,0755)
@@ -73,3 +67,4 @@ cp -a %{SOURCE2} %{buildroot}%{_sysconfdir}/logrotate.d/%{name}
 %attr(0755,root,root) %config(noreplace) %{_unitdir}/%{name}.service
 %dir %{_logdir}/%{name}
 %attr(0644,ices,ices) %{_logdir}/%{name}/ices.log
+%{_sysusersdir}/%{name}.conf
