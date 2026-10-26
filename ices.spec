@@ -16,6 +16,7 @@ BuildRequires:	make
 BuildRequires:  pkgconfig(alsa)
 BuildRequires:  pkgconfig(shout)
 BuildRequires:  pkgconfig(libxml-2.0)
+BuildRequires:  pkgconfig(ogg)
 BuildRequires:  pkgconfig
 BuildRequires:	perl
 Requires(pre):  rpm-helper
