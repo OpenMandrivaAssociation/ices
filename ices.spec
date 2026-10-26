@@ -43,7 +43,8 @@ export LIBS="-logg"
 
 %install
 %{__mkdir_p} %{buildroot}%{_bindir}
-cp -a src/%{name} %{buildroot}%{_bindir}
+# src/ices is a libtool wrapper. The ELF, and its debug info, is in .libs.
+cp -a src/.libs/%{name} %{buildroot}%{_bindir}
 
 %{__mkdir_p} %{buildroot}%{_sysconfdir}
 cp -a conf/ices-playlist.xml %{buildroot}%{_sysconfdir}/%{name}.conf
