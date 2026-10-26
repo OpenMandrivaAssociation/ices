@@ -36,6 +36,8 @@ could be used if certain conditions are met.
 perl -pi -e 's|<background>0</background>|<background>1</background>|' conf/*.xml
 
 %build
+# libshout.pc does not put -logg on the shared link line. ices calls ogg directly.
+export LIBS="-logg"
 %configure2_5x
 %make
 
