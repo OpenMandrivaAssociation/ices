@@ -65,7 +65,7 @@ cp -a %{SOURCE2} %{buildroot}%{_sysconfdir}/logrotate.d/%{name}
 
 %files
 %defattr(0644,root,root,0755)
-%doc AUTHORS COPYING README TODO doc/*.html doc/*.css conf/*.xml
+%doc AUTHORS COPYING doc/*.html doc/*.css conf/*.xml
 %attr(0755,root,root) %{_bindir}/%{name}
 %config(noreplace) %attr(0640,root,ices) %{_sysconfdir}/%{name}.conf
 %config(noreplace) %{_sysconfdir}/logrotate.d/%{name}
