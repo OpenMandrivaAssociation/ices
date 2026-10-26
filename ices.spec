@@ -17,9 +17,8 @@ BuildRequires:  pkgconfig(alsa)
 BuildRequires:  pkgconfig(shout)
 BuildRequires:  pkgconfig(libxml-2.0)
 BuildRequires:  pkgconfig
+BuildRequires:	perl
 Requires(pre):  rpm-helper
-Requires(preun): rpm-helper
-Requires(post): rpm-helper
 Requires(postun): rpm-helper
 
 %description
@@ -33,7 +32,7 @@ could be used if certain conditions are met.
 
 %prep
 %setup -q
-%{__perl} -pi -e 's|<background>0</background>|<background>1</background>|' conf/*.xml
+perl -pi -e 's|<background>0</background>|<background>1</background>|' conf/*.xml
 
 %build
 %configure2_5x
@@ -58,15 +57,8 @@ cp -a %{SOURCE2} %{buildroot}%{_sysconfdir}/logrotate.d/%{name}
 %pre
 %_pre_useradd %{name} %{_var}/log/%{name} /bin/false
 
-%post
-%systemd_post %{name}.service
-
-%preun
-%systemd_preun %{name}.service
-
 %postun
 %_postun_userdel %{name}
-%systemd_postun_with_restart %{name}.service
 
 %files
 %defattr(0644,root,root,0755)
